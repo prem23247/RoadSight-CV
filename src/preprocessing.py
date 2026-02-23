@@ -67,3 +67,6 @@ def visualize_roi(image):
     cv2.polylines(overlay, roi_vertices, True, (0, 255, 0), 3)
 
     return overlay
+    
+    def printu():
+        print("The commit made today is for consistency")
