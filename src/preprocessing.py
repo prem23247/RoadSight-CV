@@ -51,22 +51,61 @@ def apply_roi_mask(edges):
 
     return masked_edges
 
+# import numpy as np
+# import cv2
+# def visualize_roi(image):
+#     height, width = image.shape[:2]
+
+#     roi_vertices = np.array([[
+#         (0, height),
+#         (width * 0.1, height * 0.75),
+#         (width * 0.9, height * 0.75),
+#         (width, height)
+#     ]], dtype=np.int32)
+
+#     overlay = image.copy()
+#     cv2.polylines(overlay, roi_vertices, True, (0, 255, 0), 3)
+
+#     return overlay
+
 import numpy as np
 import cv2
-def visualize_roi(image):
-    height, width = image.shape[:2]
 
-    roi_vertices = np.array([[
-        (0, height),
-        (width * 0.1, height * 0.75),
-        (width * 0.9, height * 0.75),
-        (width, height)
-    ]], dtype=np.int32)
+def detect_lane_lines(edges):
+    """
+    Detect lane lines using Probabilistic Hough Transform.
+    Returns detected line segments.
+    """
 
-    overlay = image.copy()
-    cv2.polylines(overlay, roi_vertices, True, (0, 255, 0), 3)
+    lines = cv2.HoughLinesP(
+        edges,
+        rho=1,                # distance resolution in pixels
+        theta=np.pi / 180,    # angle resolution (1 degree)
+        threshold=50,         # minimum votes
+        minLineLength=40,     # minimum length of line
+        maxLineGap=100        # max gap between segments
+    )
 
-    return overlay
-    
-    def printu():
-        print("The commit made today is for consistency")
+    return lines
+
+def draw_lane_lines(image, lines):
+    """
+    Draw detected lane lines on the image.
+    """
+
+    line_image = image.copy()
+
+    if lines is None:
+        return line_image
+
+    for line in lines:
+        x1, y1, x2, y2 = line[0]
+        cv2.line(
+            line_image,
+            (x1, y1),
+            (x2, y2),
+            (0, 255, 0),   # green lines
+            3
+        )
+
+    return line_image

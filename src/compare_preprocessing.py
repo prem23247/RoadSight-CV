@@ -2,7 +2,7 @@ import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from preprocessing import preprocess_image, apply_roi_mask, visualize_roi
+from preprocessing import preprocess_image, apply_roi_mask
 
 
 INPUT_DIR = "data/raw"
@@ -23,13 +23,13 @@ for image_name in os.listdir(INPUT_DIR):
     # -----------------------------
     # Visualize ROI on original image
     # -----------------------------
-    image_with_roi = visualize_roi(original_rgb)
+    # image_with_roi = visualize_roi(original_rgb)
 
-    plt.figure(figsize=(6, 6))
-    plt.title("Original Image with ROI")
-    plt.imshow(image_with_roi)
-    plt.axis("off")
-    plt.show()
+    # plt.figure(figsize=(6, 6))
+    # plt.title("Original Image with ROI")
+    # plt.imshow(image_with_roi)
+    # plt.axis("off")
+    # plt.show()
 
     # -----------------------------
     # Edges WITHOUT ROI (baseline)
